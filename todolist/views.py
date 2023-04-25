@@ -32,7 +32,6 @@ class TodoAPIView(APIView):
 
     def get(self, request, pk):
         todo = Todo.objects.filter(author=request.user.pk, id=pk).first()
-        print(todo)
         serializer = TodoDetailSerializer(todo)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -46,6 +45,8 @@ class TodoAPIView(APIView):
 
 
 class DoneTodoAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request, pk):
         todo = Todo.objects.filter(author=request.user.pk, id=pk).first()
         print(todo)
